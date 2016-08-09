@@ -1,5 +1,4 @@
 'use strict';
-
 const path = require('path');
 const express = require('express');
 const webpack = require('webpack');
@@ -16,25 +15,15 @@ if (isDeveloping) {
   const middleware = webpackMiddleware(compiler, {
     publicPath: config.output.publicPath,
     contentBase: 'src',
-    stats: {
-      colors: true,
-      hash: false,
-      timings: true,
-      chunks: false,
-      chunkModules: false,
-      modules: false
-    }
+    hot: true,
+    noInfo: true
   });
 
   app.use(middleware);
   app.use(webpackHotMiddleware(compiler));
-  app.get('*', function response(req, res) {
+  app.get('/*', function response(req, res) {
     res.sendFile(path.join(__dirname, '/index.html'));
   });
-  /*app.get('*', function response(req, res) {
-    res.write(middleware.fileSystem.readFileSync(path.join(__dirname, '/index.html')));
-    res.end();
-  });*/
 } else {
   app.use(express.static(__dirname + '/dist'));
   app.get('/*', function response(req, res) {

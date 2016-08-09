@@ -47,7 +47,6 @@ module.exports = {
                 test: /\.css$/,
                 loader: ExtractTextPlugin.extract("style-loader", "css-loader!postcss-loader")
             },
-            
             {
                 test: /\.png$/,
                 loader: "url-loader?limit=100000"

@@ -10,8 +10,8 @@ import { render } from 'react-dom'
 /*import { Provider } from 'react-redux'*/
 import App from './conteiners/app'
 /*import configureStore from './store/configureStore'*/
-
-/*const store = configureStore(); */
+/*
+const store = configureStore(); */
 
 render(
         <App/>
