@@ -7,13 +7,14 @@ require('css/_site.scss');
 import 'babel-polyfill'
 import React from 'react'
 import { render } from 'react-dom'
+import {Router, browserHistory } from 'react-router';
+import routes from './routes';
 /*import { Provider } from 'react-redux'*/
-import App from './conteiners/app'
 /*import configureStore from './store/configureStore'*/
 /*
 const store = configureStore(); */
 
 render(
-        <App/>
+    <Router history={browserHistory} routes={routes} />
     , document.getElementById('app')
 )
