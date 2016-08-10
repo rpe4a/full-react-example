@@ -39,7 +39,7 @@ module.exports = {
         ],
         loaders: [
             {
-                loaders: ['react-hot', 'babel-loader'], 
+                loaders: ['react-hot', 'babel-loader'],
                 include: [
                     path.resolve(__dirname, "src"),
                 ],
@@ -54,7 +54,10 @@ module.exports = {
                 test: /\.css$/,
                 loader: 'style!css!postcss?modules&localIdentName=[name]---[local]---[hash:base64:5]'
             },
-
+            {
+                test: /\.json$/,
+                loader: "json"
+            },
             {
                 test: /\.png$/,
                 loader: "url-loader?limit=100000"

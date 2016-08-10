@@ -1,9 +1,14 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
+import SignupForm from '../components/signupform';
 
 class SignupPage extends Component {
-    render () {
+    render() {
         return (
-            <h1>Sign up page</h1>
+            <div className='row'>
+                <div className='col-md-4 col-md-offset-4'>
+                    <SignupForm />
+                </div>
+            </div>
         )
     }
 }
