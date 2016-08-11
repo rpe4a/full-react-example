@@ -1,6 +1,4 @@
 import React, {Component} from 'react'
-import api from '../webApiConfigure'
-/*import $ from 'jquery'*/
 import timezones from '../../../data/timezones';
 
 class SignupForm extends Component {
@@ -21,11 +19,8 @@ class SignupForm extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-
-        api.post('/user/', { ...this.state })
-        .then((response) => {
-            console.log(response);
-        });
+        this.props.userSignupRequest(this.state)
+        
     }
 
     onChange(e) {
@@ -113,5 +108,7 @@ class SignupForm extends Component {
         )
     }
 }
+
+
 
 export default SignupForm
