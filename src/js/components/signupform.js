@@ -22,15 +22,10 @@ class SignupForm extends Component {
     onSubmit(e) {
         e.preventDefault();
 
-
-        /*        $.post('http://localhost:45023/api/users', { user: this.state} , function(response){
-                    console.log(response);  
-                })*/
-
-        api.post('/user/get', { ...this.state } )
-            .then((response) => {
-                console.log(response);
-            });
+        api.post('/user/', { ...this.state })
+        .then((response) => {
+            console.log(response);
+        });
     }
 
     onChange(e) {
