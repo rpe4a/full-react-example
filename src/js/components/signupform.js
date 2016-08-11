@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import timezones from '../../../data/timezones';
+/*import _ from 'lodash'*/
 
 class SignupForm extends Component {
     constructor(props) {
@@ -11,6 +12,7 @@ class SignupForm extends Component {
             password: '',
             passwordConfirmation: '',
             timezone: '',
+            errors: {},
         };
 
         this.onChange = this.onChange.bind(this);
@@ -19,8 +21,25 @@ class SignupForm extends Component {
 
     onSubmit(e) {
         e.preventDefault();
+
+        this.setState({ errors: {} });
+
         this.props.userSignupRequest(this.state)
-        
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                let {inputs} = error.response.data;
+
+                let errors = {}
+
+                inputs.map((input) => {
+                    errors[input.field] = input.message;
+                });
+
+                this.setState({ errors: errors });
+            });
+
     }
 
     onChange(e) {
@@ -32,6 +51,7 @@ class SignupForm extends Component {
     }
 
     render() {
+        const {errors} = this.state;
         const options = timezones.map((continent, index) => {
             let timezones = continent.zones;
 
@@ -54,6 +74,7 @@ class SignupForm extends Component {
                         value={this.state.username}
                         onChange={this.onChange}
                         />
+                    {(errors.username) ? <span className='help-block'>{errors.username}</span> : ''}
                 </div>
                 <div className='form-group'>
                     <label className='control-label'>Email</label>
