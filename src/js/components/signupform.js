@@ -41,7 +41,7 @@ class SignupForm extends Component {
             this.props.userSignupRequest(this.state)
                 .then((response) => {
                     console.log(response);
-                    this.setState({ isLoding: false });
+                    this.context.router.push('/');                    
                 })
                 .catch((error) => {
                     let {inputs} = error.response.data;
@@ -139,5 +139,10 @@ class SignupForm extends Component {
         )
     }
 }
+
+SignupForm.contextTypes = {
+    router: React.PropTypes.object.isRequired
+}
+
 
 export default SignupForm

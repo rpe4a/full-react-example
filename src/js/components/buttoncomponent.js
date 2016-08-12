@@ -7,9 +7,9 @@ class ButtonComponent extends Component {
 
         let buttonBody;
 
-        if(isLoding){
+        if (isLoding) {
             buttonBody = <span><i className='fa fa-spinner fa-spin fa-fw'></i>Подождите</span>
-        }else{
+        } else {
             buttonBody = text
         }
 
@@ -27,7 +27,7 @@ ButtonComponent.propTypes = {
     text: React.PropTypes.string.isRequired
 };
 
-ButtonComponent.defaultProps ={
+ButtonComponent.defaultProps = {
     isLoding: false
 }
 
