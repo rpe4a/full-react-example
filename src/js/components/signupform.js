@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import timezones from '../../../data/timezones';
-/*import _ from 'lodash'*/
+import classname from 'classnames';
+import validateInputSignupForm from '../validation/signupform';
+import InputFieldGroup from './inputfieidgroup';
+import ButtonComponent from './buttoncomponent';
 
 class SignupForm extends Component {
     constructor(props) {
@@ -13,33 +16,45 @@ class SignupForm extends Component {
             passwordConfirmation: '',
             timezone: '',
             errors: {},
+            isLoding: false
         };
 
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
 
+    isValid() {
+        const {errors, isValid} = validateInputSignupForm(this.state);
+
+        if (!isValid) {
+            this.setState({ errors })
+        }
+
+        return isValid;
+    }
+
     onSubmit(e) {
         e.preventDefault();
 
-        this.setState({ errors: {} });
+        if (this.isValid()) {
+            this.setState({ errors: {}, isLoding: true });
+            this.props.userSignupRequest(this.state)
+                .then((response) => {
+                    console.log(response);
+                    this.setState({ isLoding: false });
+                })
+                .catch((error) => {
+                    let {inputs} = error.response.data;
 
-        this.props.userSignupRequest(this.state)
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => {
-                let {inputs} = error.response.data;
+                    let errors = {}
 
-                let errors = {}
+                    inputs.map((input) => {
+                        errors[input.field] = input.message;
+                    });
 
-                inputs.map((input) => {
-                    errors[input.field] = input.message;
+                    this.setState({ errors: errors, isLoding: false });
                 });
-
-                this.setState({ errors: errors });
-            });
-
+        }
     }
 
     onChange(e) {
@@ -65,71 +80,64 @@ class SignupForm extends Component {
         return (
             <form onSubmit={this.onSubmit}>
                 <h1>Добро пожаловать!</h1>
-                <div className='form-group'>
-                    <label className='control-label'>Имя</label>
-                    <input
-                        type='text'
-                        name='username'
-                        className='form-control'
-                        value={this.state.username}
-                        onChange={this.onChange}
-                        />
-                    {(errors.username) ? <span className='help-block'>{errors.username}</span> : ''}
-                </div>
-                <div className='form-group'>
-                    <label className='control-label'>Email</label>
-                    <input
-                        type='email'
-                        name='email'
-                        className='form-control'
-                        value={this.state.email}
-                        onChange={this.onChange}
-                        />
-                </div>
-                <div className='form-group'>
-                    <label className='control-label'>Пароль</label>
-                    <input
-                        type='password'
-                        name='password'
-                        className='form-control'
-                        value={this.state.password}
-                        onChange={this.onChange}
-                        />
-                </div>
-                <div className='form-group'>
-                    <label className='control-label'>Подтверждение пароля</label>
-                    <input
-                        type='password'
-                        name='passwordConfirmation'
-                        className='form-control'
-                        value={this.state.passwordConfirmation}
-                        onChange={this.onChange}
-                        />
-                </div>
-
-                <div className='form-group'>
+                <InputFieldGroup
+                    label='Имя'
+                    type='text'
+                    name='username'
+                    value={this.state.username}
+                    onChange={this.onChange}
+                    placeholder='Ваше имя'
+                    error={errors.username}
+                    />
+                <InputFieldGroup
+                    label='Email'
+                    type='email'
+                    name='email'
+                    value={this.state.email}
+                    onChange={this.onChange}
+                    placeholder='Ваш Email'
+                    error={errors.email}
+                    />
+                <InputFieldGroup
+                    label='Пароль'
+                    type='password'
+                    name='password'
+                    value={this.state.password}
+                    onChange={this.onChange}
+                    placeholder='Ваш пароль'
+                    error={errors.password}
+                    />
+                <InputFieldGroup
+                    label='Подтверждение пароля'
+                    type='password'
+                    name='passwordConfirmation'
+                    value={this.state.passwordConfirmation}
+                    onChange={this.onChange}
+                    placeholder='Подтвердите ваш пароль'
+                    error={errors.passwordConfirmation}
+                    />
+                <div className={classname('form-group', { 'has-feedback has-error': errors.timezone }) }>
                     <label className='control-label'>Часовой пояс</label>
                     <select
                         className='form-control'
                         name='timezone'
                         onChange={this.onChange}
                         value={this.state.timezone}>
-                        <option value='' disabled>Выберите ваш часовой пояс</option>
+                        <option value='' disabled>Ваш часовой пояс</option>
                         {options}
                     </select>
+                    {(errors.timezone) ? <span className='help-block'>{errors.timezone}</span> : ''}
                 </div>
-
-
                 <div className='form-group'>
-                    <button className='btn btn-primary btn-lg'>
-                        Войти
-                    </button>
+                    <ButtonComponent
+                        text='Регистрация'
+                        isLoding={this.state.isLoding}
+                        className='btn btn-primary btn-lg'
+                        />
                 </div>
             </form>
         )
     }
 }
-
-
 
 export default SignupForm
