@@ -1,6 +1,6 @@
 import {ADD_FLASH_MESSAGE, DELETE_FLASH_MESSAGE} from '../actions/types';
 import shortid from 'shortid';
-import {without} from 'lodash/without'
+import {without} from 'lodash/array'
 
 export default (state = [], action = {}) => {
     switch (action.type) {

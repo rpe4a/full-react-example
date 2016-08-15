@@ -5,3 +5,12 @@ export const userSignupRequest = (userData) => {
         return api.post('/user/', { ...userData })
     }
 };
+
+export const isUserExists = (userData) =>  {
+    return () => {
+        return api.post('/isUser/', { ...userData})
+    }
+
+};
+
+

@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 class ButtonComponent extends Component {
     render() {
 
-        const { isLoding, className, text} = this.props;
+        const { isLoding, className, text, invalid} = this.props;
 
         let buttonBody;
 
@@ -14,7 +14,7 @@ class ButtonComponent extends Component {
         }
 
         return (
-            <button disabled={isLoding} className={className}>
+            <button disabled={isLoding || invalid} className={className}>
                 {buttonBody}
             </button>
         );
@@ -23,12 +23,14 @@ class ButtonComponent extends Component {
 
 ButtonComponent.propTypes = {
     isLoding: React.PropTypes.bool,
+    invalid: React.PropTypes.bool,
     className: React.PropTypes.string.isRequired,
     text: React.PropTypes.string.isRequired
 };
 
 ButtonComponent.defaultProps = {
-    isLoding: false
+    isLoding: false,
+    invalid: true
 }
 
 export default ButtonComponent;

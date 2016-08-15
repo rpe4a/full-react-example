@@ -16,11 +16,13 @@ class SignupForm extends Component {
             passwordConfirmation: '',
             timezone: '',
             errors: {},
-            isLoding: false
+            isLoding: false,
+            invalid: false,
         };
 
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.checkUserExists = this.checkUserExists.bind(this);
     }
 
     isValid() {
@@ -31,6 +33,35 @@ class SignupForm extends Component {
         }
 
         return isValid;
+    }
+
+    processingError(error) {
+        let inputs = error.response.data;
+        let errors = {}
+
+        inputs.map((input) => {
+            errors[input.field] = input.message;
+        });
+
+        return errors;
+    }
+
+    checkUserExists(e) {
+        e.preventDefault();
+
+        const val = e.target.value;
+
+        if (val !== '') {
+            this.props.isUserExists(this.state)
+                .then(() => {
+                    this.setState({ errors: { username: '', email: '' }, invalid: false });
+                })
+                .catch((error) => {
+                    let errors = this.processingError(error);
+
+                    this.setState({ errors: errors, invalid: true });
+                })
+        }
     }
 
     onSubmit(e) {
@@ -45,17 +76,11 @@ class SignupForm extends Component {
                         type: 'success',
                         text: 'Ваша регистация прошла успешно. Добро пожаловать!'
                     })
-                    
-                    this.context.router.push('/');                    
+
+                    this.context.router.push('/');
                 })
                 .catch((error) => {
-                    let {inputs} = error.response.data;
-
-                    let errors = {}
-
-                    inputs.map((input) => {
-                        errors[input.field] = input.message;
-                    });
+                    let errors = this.processingError(error);
 
                     this.setState({ errors: errors, isLoding: false });
                 });
@@ -91,6 +116,7 @@ class SignupForm extends Component {
                     name='username'
                     value={this.state.username}
                     onChange={this.onChange}
+                    checkUserExists={this.checkUserExists}
                     placeholder='Ваше имя'
                     error={errors.username}
                     />
@@ -100,6 +126,7 @@ class SignupForm extends Component {
                     name='email'
                     value={this.state.email}
                     onChange={this.onChange}
+                    checkUserExists={this.checkUserExists}
                     placeholder='Ваш Email'
                     error={errors.email}
                     />
@@ -137,6 +164,7 @@ class SignupForm extends Component {
                     <ButtonComponent
                         text='Регистрация'
                         isLoding={this.state.isLoding}
+                        invalid={this.state.invalid}
                         className='btn btn-primary btn-lg'
                         />
                 </div>
@@ -147,7 +175,9 @@ class SignupForm extends Component {
 
 SignupForm.propTypes = {
     userSignupRequest: React.PropTypes.func.isRequired,
-    addFlashMessage: React.PropTypes.func.isRequired
+    addFlashMessage: React.PropTypes.func.isRequired,
+    isUserExists: React.PropTypes.func.isRequired,
+
 };
 
 SignupForm.contextTypes = {

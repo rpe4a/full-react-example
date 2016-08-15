@@ -3,7 +3,7 @@ import classname from 'classnames';
 
 class InputFieldGroup extends Component {
     render() {
-        const { name, value, label, type, error, onChange, placeholder} = this.props;
+        const { name, value, label, type, error, onChange, placeholder, checkUserExists} = this.props;
 
         return (
             <div className={classname('form-group', { 'has-feedback has-error': error }) }>
@@ -14,6 +14,7 @@ class InputFieldGroup extends Component {
                     className='form-control'
                     value={value}
                     onChange={onChange}
+                    onBlur={checkUserExists}
                     placeholder={placeholder}
                     />
                 {(error) ? <span className='glyphicon glyphicon-remove form-control-feedback'></span> : ''}
@@ -30,6 +31,7 @@ InputFieldGroup.propTypes = {
     type: React.PropTypes.string.isRequired,
     error: React.PropTypes.string,
     onChange: React.PropTypes.func.isRequired,
+    checkUserExists: React.PropTypes.func,
 }
 
 export default InputFieldGroup
