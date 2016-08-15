@@ -1,11 +1,6 @@
-import {ADD_FLASH_MESSAGE} from '../actions/types';
+import {ADD_FLASH_MESSAGE, DELETE_FLASH_MESSAGE} from '../actions/types';
 import shortid from 'shortid';
-
-/*const initialState = [{
-    id: '',
-    text: '',
-    type: '',
-}]*/
+import {without} from 'lodash/without'
 
 export default (state = [], action = {}) => {
     switch (action.type) {
@@ -18,6 +13,8 @@ export default (state = [], action = {}) => {
                     text: action.message.text,
                 }
             ]
+        case DELETE_FLASH_MESSAGE:
+            return without(state, action.message)
         default:
             return state;
     }
