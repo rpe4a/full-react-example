@@ -109,7 +109,7 @@ class SignupForm extends Component {
 
         return (
             <form onSubmit={this.onSubmit}>
-                <h1>Добро пожаловать!</h1>
+                <h1>Для продолжения зарегистрируйтесь</h1>
                 <InputFieldGroup
                     label='Имя'
                     type='text'

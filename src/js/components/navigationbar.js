@@ -19,6 +19,7 @@ class NavigationBar extends Component {
                         <ul className='nav navbar-nav'>
                         </ul>
                         <ul className='nav navbar-nav navbar-right'>
+                            <li><Link to='/signin'>Войти</Link></li>
                             <li><Link to='/signup'>Регистрация</Link></li>
                         </ul>
                     </div>

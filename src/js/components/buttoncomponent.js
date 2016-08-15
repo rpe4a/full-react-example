@@ -30,7 +30,7 @@ ButtonComponent.propTypes = {
 
 ButtonComponent.defaultProps = {
     isLoding: false,
-    invalid: true
+    invalid: false
 }
 
 export default ButtonComponent;
