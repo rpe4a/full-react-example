@@ -15,7 +15,7 @@ export const userLogin = (userData) => {
                         setAuthorizationToken(token); 
 
                         //добавляем данные в store
-                        dispatch(setCurrentUser(user));
+                        dispatch(setCurrentUser(user)); 
                     });
     };
 };
@@ -24,5 +24,15 @@ export const setCurrentUser = (userData) => {
     return {
         type: SET_CURRENT_USER,
         user: userData
+    };
+};
+
+export const userLogout = () =>  {
+    return (dispatch) => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+
+        setAuthorizationToken(false);
+        dispatch(setCurrentUser({}))
     };
 };

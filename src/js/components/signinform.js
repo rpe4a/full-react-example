@@ -57,6 +57,7 @@ class SingInForm extends Component {
                     this.context.router.push('/')
                 })
                 .catch((error) => {
+                    console.log(error);
                     const errors = this.processingError(error);
                     this.setState({ errors, isLoding: false })
                 })

@@ -1,8 +1,38 @@
 import React, {Component} from 'react'
 import { Link } from 'react-router';
+import {connect} from 'react-redux';
+import { userLogout } from '../actions/signinActions';
 
 class NavigationBar extends Component {
+    constructor(props) {
+        super(props)
+
+        this.userLogout = this.userLogout.bind(this);
+    }
+
+    userLogout(e) {
+        e.preventDefault();
+
+        this.props.userLogout();
+    }
+
     render() {
+
+        const { isAuthenticated } = this.props.signin;
+
+        const userLinks = (
+            <ul className='nav navbar-nav navbar-right'>
+                <li><a href='#' onClick={this.userLogout}>Выйти</a></li>
+            </ul>
+        );
+
+        const guestLinks = (
+            <ul className='nav navbar-nav navbar-right'>
+                <li><Link to='/signin'>Войти</Link></li>
+                <li><Link to='/signup'>Регистрация</Link></li>
+            </ul>
+        );
+
         return (
             <nav className='navbar navbar-default' role='navigation'>
                 <div className='container-fluid'>
@@ -18,10 +48,7 @@ class NavigationBar extends Component {
                     <div className='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>
                         <ul className='nav navbar-nav'>
                         </ul>
-                        <ul className='nav navbar-nav navbar-right'>
-                            <li><Link to='/signin'>Войти</Link></li>
-                            <li><Link to='/signup'>Регистрация</Link></li>
-                        </ul>
+                        { isAuthenticated ? userLinks : guestLinks}
                     </div>
                 </div>
             </nav>
@@ -29,4 +56,15 @@ class NavigationBar extends Component {
     }
 }
 
-export default NavigationBar
+NavigationBar.propTypes = {
+    signin: React.PropTypes.object.isRequired,
+    userLogout: React.PropTypes.func.isRequired,
+}
+
+function mapStateToProps(state) {
+    return {
+        signin: state.signin
+    };
+}
+
+export default connect(mapStateToProps, { userLogout })(NavigationBar);
