@@ -70,12 +70,12 @@ class SingInForm extends Component {
         return (
             <form onSubmit={this.onSubmit}>
                 <h1>Добро пожаловать!</h1>
-                { (errors.invalid) ? <div className='alert alert-danger'>{errors.invalid}</div> : ''}
+                { (errors.invalid_auth) ? <div className='alert alert-danger'>{errors.invalid_auth}</div> : ''}
                 <InputFieldGroup
                     label='Email'
                     type='email'
                     name='email'
-                    value={email}
+                    value={email} 
                     onChange={this.onChange}
                     placeholder='Ваш Email'
                     error={errors.email}
