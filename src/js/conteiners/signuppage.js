@@ -7,12 +7,12 @@ import SignupForm from '../components/signupform';
 class SignupPage extends Component {
     render() {
 
-        const {userSignupRequest, addFlashMessage, isUserExists} = this.props;
+       /* const {userSignupRequest, addFlashMessage, isUserExists} = this.props;*/
 
         return (
             <div className='row'>
-                <div className='col-md-4 col-md-offset-4'>
-                    <SignupForm userSignupRequest={userSignupRequest} addFlashMessage= {addFlashMessage} isUserExists={isUserExists} />
+                <div className='col-md-4 col-md-offset-4'> 
+                    <SignupForm {...this.props} />
                 </div>
             </div>
         )

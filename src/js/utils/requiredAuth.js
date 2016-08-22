@@ -20,8 +20,13 @@ export default (ComposedComponent) => {
                 this.context.router.push('/');
             }
         }
+        
+        componentWillUnmount(){
+            console.log('Authenticate unmount, state is '+ this.props.isAuthenticated);
+        }
 
         render() {
+
             return (
                 <ComposedComponent {...this.props}/>
             )

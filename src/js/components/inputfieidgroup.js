@@ -7,10 +7,11 @@ class InputFieldGroup extends Component {
 
         return (
             <div className={classname('form-group', { 'has-feedback has-error': error }) }>
-                <label className='control-label'>{label}</label>
+                <label htmlFor={`input-${name}`} className='control-label'>{label}</label>
                 <input
                     type={type}
                     name={name}
+                    id={`input-${name}`}
                     className='form-control'
                     value={value}
                     onChange={onChange}

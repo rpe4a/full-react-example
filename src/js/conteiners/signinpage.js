@@ -8,9 +8,9 @@ class SigninPage extends Component {
         const { userLogin } = this.props;
 
         return (
-            <div className='row'>
+            <div  className='row' data-custom={'row'}>
                 <div className='col-md-4 col-md-offset-4'>
-                    <SigninForm userLogin={userLogin}/>
+                    <SigninForm  userLogin={userLogin}/>
                 </div>
             </div>
 

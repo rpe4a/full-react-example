@@ -3,8 +3,6 @@ import InputFieldGroup from './inputfieidgroup';
 import ButtonComponent from './buttoncomponent';
 import Validation from '../validation/signinform';
 
-ButtonComponent
-
 class SingInForm extends Component {
     constructor(props) {
         super(props)
